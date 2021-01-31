@@ -12,6 +12,7 @@
 #include "datapoint.h"
 #include "date.h"
 
-std::vector<DataPoint*>* parse_datapoints_from_file(const std::string& filename);
+std::vector<DataPoint*>* parse_datapoints_from_file(const std::string& file_location);
+unsigned int get_num_datapoint_entries(const std::string& file_location);
 
 #endif //_I_O_H

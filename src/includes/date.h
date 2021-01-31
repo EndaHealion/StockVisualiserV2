@@ -15,4 +15,9 @@ struct Date{
     std::string to_string();
 };
 
+inline int to_comaprable_date(Date* date) {
+    // {year..month..day}
+    return date->year*10000 + date->month*100 + date->day;
+}
+
 #endif //DATE_H
