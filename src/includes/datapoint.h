@@ -8,7 +8,7 @@
 
 #include "date.h"
 
-struct DataPoint{
+struct DataPoint {
     std::string ticker;
     float open_price;
     float close_price;
@@ -23,7 +23,6 @@ struct DataPoint{
     }
     
     void print();
-    
 };
 
 #endif //DATAPOINT_H

@@ -1,4 +1,0 @@
-
-cd build
-./VisuStock
-cd ..

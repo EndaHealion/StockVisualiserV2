@@ -2,10 +2,15 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 #include <chrono>
+#include <iostream>
+#include <thread>
 
 #include "includes/datapoint.h"
 #include "includes/IO.h"
 #include "includes/stockdata_manipulation.h"
+#include "includes/widget.h"
+#include "includes/graphs.h"
+#include "includes/screen.h"
 
 // Graph types: candle graph, bar chart, line graph
 // View stock's open, close adj, high, low, volume over a specific date range
@@ -20,30 +25,51 @@
 */
 
 int main() {
-    // sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(800, 600, 1), "VisuStock V2!");
+    constexpr unsigned int window_width = 1920;
+    constexpr unsigned int window_height = 1080;
     
-    std::string input_file_location = "../res/stock_data/daily_prices200k.csv";
+    sf::RenderWindow* window = new sf::RenderWindow(sf::VideoMode(window_width, window_height, 1), "VisuStock V2!");
     
+    std::string font_location = "res/liberation-mono.ttf";
+    sf::Font* font = new sf::Font();
+    bool font_loaded = font->loadFromFile(font_location);
+    if (!font_loaded) {
+        fprintf(stderr, "Could not open font at location: %s\n", font_location.c_str());
+        assert(false);
+    }
+    
+    std::string input_file_location = "res/stock_data/daily_prices100k.csv";
     auto stock_data = parse_datapoints_from_file(input_file_location);
     
-    sort_by_ticker(stock_data);
-    std::vector<std::string>* tickers = parse_tickers(stock_data);
+    std::vector<std::string>* tickers = i_sort(stock_data);
+    assert(tickers != nullptr);
     
+    Screen* screen = new Screen(window_width, window_height, tickers, stock_data, font);
     
-    
-    /*
-        while (window->isOpen()) {
-            sf::Event event;
-            while (window->pollEvent(event)) {
-                if (event.type == sf::Event::Closed) {
+    while (window->isOpen()) {
+        sf::Vector2i mouse_pos = sf::Mouse::getPosition(*window);
+        const float mouse_x = (float)mouse_pos.x;
+        const float mouse_y = (float)mouse_pos.y;
+        
+        sf::Event event;
+        while (window->pollEvent(event)) {
+            if (event.type == sf::Event::Closed) {
+                window->close();
+            }
+            else if (event.type == sf::Event::KeyPressed) {
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape)) {
                     window->close();
                 }
-                
             }
-            
-            window->clear();
-            window->display();
         }
-        */
+        
+        window->clear();
+        
+        screen->draw(window, mouse_x, mouse_y);
+        
+        window->display();
+        
+    }
+        
     return 0;
 }
