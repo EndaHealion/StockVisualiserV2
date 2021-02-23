@@ -86,7 +86,7 @@ void TickerWidgets::draw(sf::RenderWindow* window, float mouse_x, float mouse_y)
     right_ticker_scroller->draw(window, mouse_x, mouse_y);
 }
 
-void TickerWidgets::move_tickers_left() {
+void TickerWidgets::scroll_tickers_left() {
     const unsigned int tickers_size = tickers->size();
     bool can_move = false;
     for (unsigned int i=0; i<tickers_size; i++) {

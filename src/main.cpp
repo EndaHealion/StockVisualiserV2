@@ -75,10 +75,10 @@ int main() {
             else if (event.type == sf::Event::MouseButtonPressed) {
                 if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
                     if (is_hovering_left) {
-                        screen->ticker_widgets->move_tickers_left();
+                        screen->ticker_widgets->scroll_tickers_left();
                     }
                     else if (is_hovering_right) {
-                        screen->ticker_widgets->move_tickers_right();
+                        screen->ticker_widgets->scroll_tickers_right();
                     }
                 }
             }

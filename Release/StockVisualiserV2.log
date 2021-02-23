@@ -1,11 +1,7 @@
-﻿  screen.cpp
-C:\dev\StockVisualiserV2\src\screen.cpp(11,48): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\dev\StockVisualiserV2\src\screen.cpp(11,40): warning C4244: 'argument': conversion from 'unsigned int' to 'float', possible loss of data
-C:\dev\StockVisualiserV2\src\screen.cpp(51,84): warning C4244: 'initializing': conversion from 'unsigned int' to 'float', possible loss of data
-C:\dev\StockVisualiserV2\src\screen.cpp(51,27): warning C4244: 'initializing': conversion from 'unsigned int' to 'const float', possible loss of data
+﻿  main.cpp
   Generating code
   3 of 563 functions ( 0.5%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
+    2 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   StockVisualiserV2.vcxproj -> C:\dev\StockVisualiserV2\Release\StockVisualiserV2.exe

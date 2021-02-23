@@ -40,8 +40,8 @@ struct TickerWidgets {
     TickerWidgets(float window_width, float window_height, float x, float y, std::vector<std::string>* tickers, sf::Font* font);
     
     void select_ticker(float mouse_x, float mouse_y);
-    void move_tickers_left();
-    void move_tickers_right();
+    void scroll_tickers_left();
+    void scroll_tickers_right();
     void draw(sf::RenderWindow* window, float mouse_x, float mouse_y);
     void update_should_draw();
 };
