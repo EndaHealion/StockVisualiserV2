@@ -13,12 +13,21 @@ Widget::Widget(float x, float y, float width, float height, sf::Color col) : col
     (*vertices)[3] = sf::Vertex(sf::Vector2f(x, y+height), col);
 }
 
+void Widget::move(float dx, float dy) {
+    (*vertices)[0].position.x += dx; (*vertices)[0].position.y += dy;
+    (*vertices)[1].position.x += dx; (*vertices)[1].position.y += dy;
+    (*vertices)[2].position.x += dx; (*vertices)[2].position.y += dy;
+    (*vertices)[3].position.x += dx; (*vertices)[3].position.y += dy;
+    x += dx;
+    y += dy;
+}
+
 void Widget::draw(sf::RenderWindow* window, float mouse_x, float mouse_y) {
     window->draw(*vertices);
 }
 
-
-HighlightWidget::HighlightWidget(float x, float y, float width, float height, sf::Color col, sf::Color alt) : Widget(x, y, width, height, col), alt_color{alt} {
+HighlightWidget::HighlightWidget(float x, float y, float width, float height, sf::Color col, sf::Color alt)
+: Widget(x, y, width, height, col), alt_color{alt} {
     
 }
 
@@ -42,8 +51,10 @@ void HighlightWidget::draw(sf::RenderWindow* window, float mouse_x, float mouse_
 TextWidget::TextWidget(float x, float y, float width, float height, sf::Color col, const std::string& text, sf::Color txt_col, sf::Font* font, unsigned int font_size) :
 Widget(x, y, width, height, col)
 {
+    this->font_size = font_size;
+    this->nchars = text.size();
     this->text = {text, *font, font_size};
-    const float offset_to_center_text = (float)-0.5f*font_size*text.size(); 
+    const float offset_to_center_text = (float)-0.5f*font_size*nchars;
     // NOTE(Enda): The "centerX" value is meaningless and has no logic to it. I just put in and adjusted values until it looked good enough. Fix later if it gets unusable...
     const float centerX = x + (offset_to_center_text + width - font_size)*0.5f;
     const float centerY = y + ( (height-font_size) * 0.5f) ;
@@ -58,9 +69,24 @@ void TextWidget::draw(sf::RenderWindow* window, float mouse_x, float mouse_y) {
     window->draw(text);
 }
 
-HighlightTextWidget::HighlightTextWidget(float x, float y, float width, float height, sf::Color col, sf::Color alt_clr, const std::string& text, sf::Color txt_col, sf::Font* font, unsigned int font_size) : TextWidget(x, y, width, height, col, text, txt_col, font, font_size)
-{
-    this->alt_color = alt_clr; 
+void TextWidget::move(float dx, float dy) {
+    (*vertices)[0].position.x += dx; (*vertices)[0].position.y += dy;
+    (*vertices)[1].position.x += dx; (*vertices)[1].position.y += dy;
+    (*vertices)[2].position.x += dx; (*vertices)[2].position.y += dy;
+    (*vertices)[3].position.x += dx; (*vertices)[3].position.y += dy;
+    x += dx;
+    y += dy;
+    
+    const float offset_to_center_text = (float)-0.5f*font_size*nchars;
+    const float centerX = x + (offset_to_center_text + width - font_size)*0.5f;
+    const float centerY = y + ( (height-font_size) * 0.5f) ;
+    
+    text.setPosition(centerX, centerY);
+}
+
+HighlightTextWidget::HighlightTextWidget(float x, float y, float width, float height, sf::Color col, sf::Color alt_clr, const std::string& text, sf::Color txt_col, sf::Font* font, unsigned int font_size)
+: TextWidget(x, y, width, height, col, text, txt_col, font, font_size) {
+    this->alt_color = alt_clr;
 }
 
 void HighlightTextWidget::draw(sf::RenderWindow* window, float mouse_x, float mouse_y) {

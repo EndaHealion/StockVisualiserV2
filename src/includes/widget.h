@@ -10,6 +10,7 @@ struct Widget {
     
     Widget(float x, float y, float width, float height, sf::Color col);
     
+    virtual void move(float dx, float dy);
     virtual void draw(sf::RenderWindow* window, float mouse_x, float mouse_y);
 };
 
@@ -24,10 +25,14 @@ struct HighlightWidget : public Widget {
 struct TextWidget : public Widget {
     sf::Text text;
     sf::Color text_color;
+    unsigned int font_size;
+    unsigned int nchars;
     
     TextWidget(float x, float y, float width, float height, sf::Color col, const std::string& text, sf::Color txt_col, sf::Font* font, unsigned int font_size);
     
     void draw(sf::RenderWindow* window, float mouse_x, float mouse_y) override;
+    void move(float dx, float dy);
+    void set_position(float x, float y);
 };
 
 struct HighlightTextWidget : public TextWidget {
